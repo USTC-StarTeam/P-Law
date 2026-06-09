@@ -1,94 +1,144 @@
-# README for Predictive Modeling in Sequential Recommendation: Bridging Performance Laws with Data Quality Insights
+# Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy
 
+[![arXiv](https://img.shields.io/badge/arXiv-2412.00430-b31b1b.svg)](https://arxiv.org/abs/2412.00430)
+[![ICML 2024](https://img.shields.io/badge/ICML-2024-4b6cb7.svg)](https://icml.cc/virtual/2024)
+[![Python](https://img.shields.io/badge/Python-3.7%2B-3776ab.svg)](https://www.python.org/)
 
----
+Official code for **"Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy"**.
 
-## PerformanceLaw Library
+This repository studies why the scaling-law view used for large language models does not directly transfer to sequential recommendation, and introduces a **Performance Law** that models HR/NDCG behavior using both model configuration and data quality. The codebase contains the entropy utility, the general transformer training code, and the appendix scripts/frameworks used to fit and visualize the reported laws.
 
-This project provides the `PerformanceLaw` Python library for measuring the **actual entropy** of a sequence. Actual entropy quantifies the information complexity or data quality in sequential data, which can help analyze user behavior and support performance law studies.
+## 1. Paper
 
-### Main Functions
+Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. **Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy.** Proceedings of the 41st International Conference on Machine Learning (ICML), PMLR 235, 2024. [arXiv:2412.00430](https://arxiv.org/abs/2412.00430).
 
-- `actual_entropy(seq)`: Returns the actual entropy of a sequence.
-- `actual_entropy_tq(seq)`: Same as above, with a progress bar (requires `tqdm` installed).
+## 2. Highlights
 
-### Installation
+- Introduces **Performance Law** for sequential recommendation, modeling performance rather than only loss.
+- Uses **Approximate Entropy (ApEn)** as a data-quality signal that better reflects sequence complexity than dataset size alone.
+- Shows that recommendation performance can follow a U-shaped trend over model configuration and data quality, unlike a simple monotonic scaling-law curve.
+- Provides reusable components for entropy estimation, transformer-based sequential recommendation experiments, and appendix fitting/visualization.
 
-From the project root (where `setup.py` is located), run:
+## 3. Method At A Glance
 
-```bash
-pip install -e .
+![Performance Law overview](docs/assets/performance-law-overview.png)
+
+The paper contrasts conventional scaling-law behavior with the recommendation-specific Performance Law. Instead of expecting larger models or more data to monotonically improve performance, the fitted surfaces expose where HR/NDCG improve, saturate, or decay under different sequence lengths, model depths, embedding dimensions, and ApEn-derived data-quality parameters.
+
+## 4. Repository Structure
+
+```text
+.
+|-- PerformanceLaw/                         # Python package for actual entropy / ApEn-style sequence complexity
+|-- General_Transformer/                    # Transformer training and evaluation code for sequential recommendation
+|-- Performance_Law_Appendix_Result/        # Performance-law fitting scripts and generated appendix result figures
+|-- Performance_Law_Appendix_Framework/     # Additional baseline/framework code used in appendix experiments
+|-- docs/assets/                            # README figures cropped or converted from the paper/results
+|-- .gitattributes                          # Git LFS tracking for large data files
+`-- README.md
 ```
 
-### Example Usage
+## 5. Installation
 
-Import and use in any Python file:
+Clone the repository with Git LFS enabled when you need the large tracked data files:
+
+```bash
+git clone https://github.com/USTC-StarTeam/P-Law.git
+cd P-Law
+git lfs pull
+```
+
+Install the entropy utility:
+
+```bash
+pip install -e PerformanceLaw
+```
+
+Install dependencies for the transformer experiments:
+
+```bash
+cd General_Transformer
+pip install -r requirements.txt
+```
+
+## 6. Data
+
+Some data files under `General_Transformer/data/` are tracked with Git LFS. If a large file is unavailable from LFS, prepare the corresponding recommendation dataset manually before launching full-scale experiments. The training code expects preprocessed sequential data paths to match the path settings used inside `General_Transformer/main.py`.
+
+Appendix frameworks under `Performance_Law_Appendix_Framework/` may follow their original dataset conventions. Read the local README inside each framework directory before running those baselines.
+
+## 7. Quick Start
+
+Estimate the actual entropy of a short sequence:
 
 ```python
 from PerformanceLaw import actual_entropy, actual_entropy_tq
 
 sequence = [1, 2, 1, 2, 3]
 print(actual_entropy(sequence))
+print(actual_entropy_tq(sequence))  # progress-bar version for longer sequences
 ```
 
-Use the progress bar version for longer sequences:
+Run a transformer experiment:
 
-```python
-print(actual_entropy_tq(sequence))  # Requires 'tqdm'
+```bash
+cd General_Transformer
+torchrun --standalone --nproc_per_node=1 main.py --model_name llama --n_layers 8 --n_heads 8 --batch_size 32
 ```
 
-### Typical Applications
+Use `--eval_only` with `--ckpt_name` to evaluate an existing checkpoint.
 
-- Measure sequence complexity in recommendation systems.
-- Assess data quality or diversity in behavioral datasets.
-- Support performance law and scaling law analysis with a simple entropy metric.
+## 8. Reproducing Paper Results
 
----
+Train or evaluate the sequential recommendation backbone from `General_Transformer/`, then fit the law surfaces from the appendix result directory:
 
+```bash
+cd Performance_Law_Appendix_Result
+python performance_law_fitting.py
+```
 
-This README provides an overview of the project and instructions on how to navigate and utilize the different components available in the `/General_Transformer` and `/Performance_Law_Appendix_Result` directories.
+The fitting script prepares metric matrices, normalizes them, fits the parametric Performance Law, reports fitting quality, and generates 3D visualizations for HR/NDCG.
 
-## Project Overview
+## 9. Configuration Notes
 
-The project focuses on advancing sequential recommendation systems through innovative models and performance law fitting strategies. It is divided into two main components:
+Important arguments in `General_Transformer/main.py` include:
 
-1. **General Transformer for Sequential Recommendation**: Located in the `/General_Transformer` directory, this component implements a general transformer architecture for sequential recommendation tasks.
-2. **Performance Law Fitting Analysis**: Found in the `/Performance_Law_Appendix_Result` directory, this component focuses on fitting performance laws for metrics like HR (Hit Rate) and NDCG (Normalized Discounted Cumulative Gain).
+- `--model_name`: `llama` or `hstu`
+- `--n_layers`: number of transformer layers
+- `--n_heads`: number of attention heads
+- `--batch_size`: training batch size
+- `--out_dir`: checkpoint and log directory
+- `--deepspeed`: optional DeepSpeed configuration path
 
-### Directory Structure
+Adjust dataset paths in the training script before launching large experiments.
 
-- **/General_Transformer**: Contains scripts and code for training and evaluating transformer models for recommendation systems.
-- **/Performance_Law_Appendix_Result**: Includes scripts and generated results for performance law fitting analysis, along with supplementary images referenced in the research paper.
+## 10. Experimental Highlights
 
-## Details
+![Performance Law fitting results](docs/assets/performance-law-results.png)
 
-### General Transformer for Sequential Recommendation
+The fitted Performance Law surfaces track HR and NDCG behavior across model and data settings, while the simpler scaling-law surfaces miss important non-monotonic trends. This supports the paper's conclusion that recommendation model selection should account for both model scale and data-quality signals such as ApEn.
 
-The scripts in the `/General_Transformer` directory are designed to train transformer models tailored for sequential recommendation tasks. The main features are:
+## 11. Notes For Maintainers
 
-- **Model Training**: Utilizing DDP (Distributed Data Parallel) to efficiently train on multiple GPUs.
-- **Hyperparameter Configurations**: Flexible adjustments for layers, heads, batch sizes, and more.
-- **Logging and Evaluation**: Detailed performance metrics are logged using libraries like WandB.
+- Keep the top-level README focused on the paper story and runnable entry points; place framework-specific details in each subdirectory.
+- Do not remove Git LFS tracking without replacing the large data workflow.
+- When adding new appendix figures, store README-ready images under `docs/assets/` and keep original experiment artifacts in their source directories.
 
-To learn more about using these scripts, refer to the README provided within the `/General_Transformer` directory.
+<a id="citation"></a>
 
-### Performance Law Fitting Analysis
+## 12. Citation
 
-Located in the `/Performance_Law_Appendix_Result`, this segment of the project analyzes performance laws through an innovative fitting approach. Key elements include:
+```bibtex
+@inproceedings{shen2024optimizing,
+  title = {Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy},
+  author = {Shen, Tingjia and Wang, Hao and Wu, Chuhan and Chin, Jin Yao and Guo, Wei and Liu, Yong and Guo, Huifeng and Lian, Defu and Tang, Ruiming and Chen, Enhong},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+  series = {Proceedings of Machine Learning Research},
+  volume = {235},
+  year = {2024}
+}
+```
 
-- **Performance Law Fitting**: Detailed scripts for fitting performance laws to key metrics.
-- **Supplementary Images**: Includes images such as `PerformanceLaw_HR`, `PerformanceLaw_NDCG`, `ScalingLaw_HR`, and `ScalingLaw_NDCG` for deeper insights and validation of research findings these images serve as supplementary material for the paper.
+## 13. Contact
 
-To understand the scripts and their execution, refer to the README within the `/Performance_Law_Appendix_Result` directory.
-
-## Getting Started
-
-1. **Navigate to the relevant directory**:
-   - For transformer models, explore `/General_Transformer`.
-   - For performance law analysis, visit `/Performance_Law_Appendix_Result`.
-   
-2. **Install required dependencies**: Ensure all necessary Python libraries are installed as indicated in the README files within each directory.
-
-3. **Run the scripts**: Follow the instructions to execute model training, evaluation, or performance fitting as required.
-
-4. **Explore Results and Graphs**: Analyze outputs, performance metrics, and graphical results included in each component.
+For paper questions, contact Hao Wang at `wanghao3@ustc.edu.cn` or Enhong Chen at `cheneh@ustc.edu.cn`. For repository issues, please open a GitHub issue in this repository.
