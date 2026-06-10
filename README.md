@@ -128,7 +128,23 @@ Adjust dataset paths in the training script before launching large experiments.
 
 ![Performance Law fitting results](docs/assets/performance-law-results.png)
 
-The fitted P-Law surfaces track HR and NDCG behavior across model and data settings, while simpler scaling-law surfaces miss important non-monotonic trends. This supports the paper's conclusion that recommendation model selection should account for model scale, data quality, and the gap between optimization loss and ranking performance.
+### 10.1 Scaling-Law Fit
+
+The paper first checks whether recommendation loss follows a scaling-law trend. On MovieLens-1M, Amazon Books, KuaiRand-pure, and Huawei Music, the fitted curves report coefficient-of-determination values above 0.95, supporting the use of scale-aware analysis before moving to ranking metrics.
+
+**Conclusion:** the loss surface is regular enough to support law fitting, but loss alone is not sufficient to explain ranking quality.
+
+### 10.2 Performance-Law Fit
+
+P-Law then fits HR@10 and NDCG@10 with model depth, embedding dimension, and data-quality terms. The fitted surfaces in Figure 3 track non-monotonic behavior that simpler scaling-law surfaces can miss.
+
+**Conclusion:** recommendation performance depends jointly on model scale and data quality; increasing parameters is not always monotonic once ranking metrics are considered.
+
+### 10.3 Data Quality Signal
+
+The paper links the fitted data parameter to `tokens / ApEn`, where Approximate Entropy (ApEn) is used as a dataset-quality signal. The linear relationships in Figure 4 appear consistently across the evaluated datasets.
+
+**Conclusion:** P-Law gives a practical way to compare candidate model/data configurations instead of treating token count as the only scale variable.
 
 ## 11. Notes For Maintainers
 

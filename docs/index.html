@@ -184,7 +184,15 @@ python performance_law_fitting.py</code></pre>
 <p>Adjust dataset paths in the training script before launching large experiments.</p>
 <h2 id="10-experimental-highlights">10. Experimental Highlights</h2>
 <p><img src="assets/performance-law-results.png" alt="Performance Law fitting results"></p>
-<p>The fitted P-Law surfaces track HR and NDCG behavior across model and data settings, while simpler scaling-law surfaces miss important non-monotonic trends. This supports the paper's conclusion that recommendation model selection should account for model scale, data quality, and the gap between optimization loss and ranking performance.</p>
+<h3 id="10-1-scaling-law-fit">10.1 Scaling-Law Fit</h3>
+<p>The paper first checks whether recommendation loss follows a scaling-law trend. On MovieLens-1M, Amazon Books, KuaiRand-pure, and Huawei Music, the fitted curves report coefficient-of-determination values above 0.95, supporting the use of scale-aware analysis before moving to ranking metrics.</p>
+<p><strong>Conclusion:</strong> the loss surface is regular enough to support law fitting, but loss alone is not sufficient to explain ranking quality.</p>
+<h3 id="10-2-performance-law-fit">10.2 Performance-Law Fit</h3>
+<p>P-Law then fits HR@10 and NDCG@10 with model depth, embedding dimension, and data-quality terms. The fitted surfaces in Figure 3 track non-monotonic behavior that simpler scaling-law surfaces can miss.</p>
+<p><strong>Conclusion:</strong> recommendation performance depends jointly on model scale and data quality; increasing parameters is not always monotonic once ranking metrics are considered.</p>
+<h3 id="10-3-data-quality-signal">10.3 Data Quality Signal</h3>
+<p>The paper links the fitted data parameter to <code>tokens / ApEn</code>, where Approximate Entropy (ApEn) is used as a dataset-quality signal. The linear relationships in Figure 4 appear consistently across the evaluated datasets.</p>
+<p><strong>Conclusion:</strong> P-Law gives a practical way to compare candidate model/data configurations instead of treating token count as the only scale variable.</p>
 <h2 id="11-notes-for-maintainers">11. Notes For Maintainers</h2>
 <ul>
 <li>Keep the top-level README focused on the paper story and runnable entry points; place framework-specific details in each subdirectory.</li>
