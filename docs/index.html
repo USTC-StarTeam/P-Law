@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>P-Law: Performance Laws for Sequential Recommendation</title>
-  <meta name="description" content="Project page for P-Law: performance laws and approximate entropy for optimizing sequential recommendation models.">
+  <title>P-Law: Quantitative Scaling Law for Large Recommendation Models</title>
+  <meta name="description" content="Project page for P-Law: entropy-guided quantitative scaling law prediction for large recommendation models.">
   <style>
     :root {
       --ink: #172033;
@@ -306,42 +306,44 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <div class="eyebrow">ICML 2024</div>
-          <h1>Performance Laws for Sequential Recommendation</h1>
-          <p class="subtitle">A performance-centered scaling analysis with approximate entropy for modeling how recommendation quality changes with data quality and model configuration.</p>
-          <p class="paper-ref">Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. <strong>Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy.</strong> In <em>Proceedings of the 41st International Conference on Machine Learning (ICML 2024)</em>, PMLR 235, 2024.</p>
-          <p class="paper-links"><a href="https://arxiv.org/abs/2412.00430">Paper</a> / <a href="https://arxiv.org/pdf/2412.00430">PDF</a> / <a href="https://ustc-starteam.github.io/P-Law/">Project Page</a> / <a href="#citation">Citation</a></p>
-          <p class="paper-summary">P-Law studies how sequential recommendation performance changes with model scale and data quality. It fits HR/NDCG with a recommendation-specific Performance Law and uses Approximate Entropy to quantify sequence complexity.</p>
+          <div class="eyebrow">NeurIPS 2025 Poster</div>
+          <h1>P-Law: Predicting Quantitative Scaling Law with Entropy Guidance in Large Recommendation Models</h1>
+          <p class="subtitle">An entropy-guided scaling framework for predicting recommendation performance across model, data, and training settings.</p>
+          <p class="paper-ref">Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. <strong>P-Law: Predicting Quantitative Scaling Law with Entropy Guidance in Large Recommendation Models.</strong> NeurIPS 2025 Poster, San Diego, USA, 2025.</p>
+          <p class="paper-links"><a href="https://openreview.net/forum?id=En1F2gjza6">OpenReview</a> / <a href="https://neurips.cc/virtual/2025/loc/san-diego/poster/119100">NeurIPS Virtual Poster</a> / <a href="https://neurips.cc/media/neurips-2025/Slides/119100.pdf">Slides PDF</a> / <a href="https://slideslive.com/39047036">Video</a> / <a href="https://neurips.cc/media/PosterPDFs/NeurIPS%202025/119100.png?t=1762758210.729176">Poster Image</a> / <a href="#citation">Citation</a></p>
+          <p class="paper-summary">P-Law predicts large recommendation model performance instead of only describing qualitative scaling trends. It uses entropy guidance to reduce redundant-sequence effects and fits the loss-performance gap for practical scaling decisions.</p>
           <div class="buttons">
             <a class="button primary" href="https://github.com/USTC-StarTeam/P-Law">Code</a>
-            <a class="button" href="#method">Method</a>
-            <a class="button" href="#results">Results</a>
+            <a class="button" href="https://openreview.net/forum?id=En1F2gjza6">OpenReview</a>
+            <a class="button" href="https://neurips.cc/media/neurips-2025/Slides/119100.pdf">Slides</a>
+            <a class="button" href="https://slideslive.com/39047036">Video</a>
+            <a class="button" href="https://neurips.cc/media/PosterPDFs/NeurIPS%202025/119100.png?t=1762758210.729176">Poster</a>
             <a class="button" href="#citation">BibTeX</a>
           </div>
         </div>
         <figure class="figure">
           <img src="assets/performance-law-overview.png" alt="Performance Law overview compared with scaling law behavior">
-          <figcaption class="caption">Performance Law models recommendation metrics directly and captures U-shaped effects that simple scaling-law views can miss.</figcaption>
+          <figcaption class="caption">P-Law models recommendation metrics directly and captures non-monotonic effects that simple scaling-law views can miss.</figcaption>
         </figure>
       </div>
     </section>
 
     <section id="method">
       <div class="wrap">
-        <h2>1. Method: From Scaling Law to Performance Law</h2>
-        <p class="section-lead">P-Law studies sequential recommendation through performance metrics such as HR and NDCG, using approximate entropy to represent data quality and reveal where larger models or more complex data help or hurt.</p>
+        <h2>1. Method: From Scaling Law to P-Law</h2>
+        <p class="section-lead">P-Law predicts large recommendation model performance through ranking metrics such as HR and NDCG, using entropy-guided data quality and a fitted loss-performance discrepancy term.</p>
         <div class="steps">
           <article class="step">
-            <strong>1. Measure Data Quality</strong>
-            <p>Estimate sequence complexity with approximate entropy instead of relying only on dataset size.</p>
+            <strong>1. Measure Entropy-Guided Data Quality</strong>
+            <p>Estimate sequence complexity so redundant, low-information interactions have less influence than raw dataset size.</p>
           </article>
           <article class="step">
-            <strong>2. Fit Performance Surfaces</strong>
-            <p>Fit HR/NDCG over model depth, embedding dimension, and entropy-derived data parameters.</p>
+            <strong>2. Fit Quantitative Performance Surfaces</strong>
+            <p>Fit HR/NDCG over model depth, embedding dimension, data quality, and training settings.</p>
           </article>
           <article class="step">
-            <strong>3. Optimize Configuration</strong>
-            <p>Use fitted surfaces to identify efficient settings without exhaustive full-scale training.</p>
+            <strong>3. Predict Scaling Decisions</strong>
+            <p>Use fitted surfaces to estimate useful parameter choices and model-expansion potential without exhaustive full-scale training.</p>
           </article>
         </div>
       </div>
@@ -350,7 +352,7 @@
     <section id="code">
       <div class="wrap">
         <h2>2. Code</h2>
-        <p class="section-lead">The repository contains an entropy utility, transformer training code, and appendix scripts for law fitting and visualization.</p>
+        <p class="section-lead">The repository contains an entropy utility, transformer-based recommendation training code, and appendix scripts for P-Law fitting and visualization.</p>
         <div class="notes">
           <article class="note">
             <strong>Install the entropy package</strong>
@@ -373,7 +375,7 @@ python performance_law_fitting.py</code></pre>
     <section id="results">
       <div class="wrap">
         <h2>3. Experimental Highlights</h2>
-        <p class="section-lead">The fitted surfaces show that recommendation performance depends jointly on model scale and data quality, and that HR/NDCG behavior can be non-monotonic.</p>
+        <p class="section-lead">The fitted surfaces show that recommendation performance depends jointly on model scale, data quality, and the gap between optimization loss and ranking performance.</p>
         <div class="results">
           <article class="result">
             <div class="metric">HR</div>
@@ -381,20 +383,20 @@ python performance_law_fitting.py</code></pre>
             <p>The framework fits ranking performance directly rather than only modeling training loss.</p>
           </article>
           <article class="result">
-            <div class="metric">ApEn</div>
+            <div class="metric">Entropy</div>
             <strong>Data quality signal</strong>
-            <p>Approximate entropy captures sequence complexity and supports cross-dataset analysis.</p>
+            <p>Entropy guidance captures sequence complexity and reduces the effect of redundant interaction histories.</p>
           </article>
           <article class="result">
             <div class="metric">U-shape</div>
             <strong>Configuration insight</strong>
-            <p>Performance can improve, saturate, and decay as model and data settings change.</p>
+            <p>Performance can improve, saturate, and decay as model, data, and training settings change.</p>
           </article>
         </div>
         <div class="figure-grid">
           <figure class="figure">
             <img src="assets/performance-law-results.png" alt="Performance Law and Scaling Law fitting results for HR and NDCG">
-            <figcaption class="caption">Performance Law surfaces better match the observed HR/NDCG fitting results across datasets and configurations.</figcaption>
+            <figcaption class="caption">P-Law surfaces better match the observed HR/NDCG fitting results across datasets and configurations.</figcaption>
           </figure>
         </div>
       </div>
@@ -403,20 +405,19 @@ python performance_law_fitting.py</code></pre>
     <section id="citation">
       <div class="wrap">
         <h2>4. Citation</h2>
-        <pre><code>@inproceedings{shen2024optimizing,
-  title = {Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy},
+        <pre><code>@inproceedings{shen2025plaw,
+  title = {P-Law: Predicting Quantitative Scaling Law with Entropy Guidance in Large Recommendation Models},
   author = {Shen, Tingjia and Wang, Hao and Wu, Chuhan and Chin, Jin Yao and Guo, Wei and Liu, Yong and Guo, Huifeng and Lian, Defu and Tang, Ruiming and Chen, Enhong},
-  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
-  series = {Proceedings of Machine Learning Research},
-  volume = {235},
-  year = {2024}
+  booktitle = {Advances in Neural Information Processing Systems},
+  year = {2025},
+  url = {https://openreview.net/forum?id=En1F2gjza6}
 }</code></pre>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">University of Science and Technology of China and Huawei Technologies. Code: <a href="https://github.com/USTC-StarTeam/P-Law">USTC-StarTeam/P-Law</a>.</div>
+    <div class="wrap">University of Science and Technology of China and Huawei Technologies. Code: <a href="https://github.com/USTC-StarTeam/P-Law">USTC-StarTeam/P-Law</a>. NeurIPS virtual poster: <a href="https://neurips.cc/virtual/2025/loc/san-diego/poster/119100">poster 119100</a>.</div>
   </footer>
 </body>
 </html>

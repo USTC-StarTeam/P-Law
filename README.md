@@ -1,39 +1,47 @@
-# Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy
+# P-Law: Predicting Quantitative Scaling Law with Entropy Guidance in Large Recommendation Models
 
 [![Project Page](https://img.shields.io/badge/Project-Page-2454d6.svg)](https://ustc-starteam.github.io/P-Law/)
-[![ICML 2024](https://img.shields.io/badge/ICML-2024-4b6cb7.svg)](https://icml.cc/virtual/2024)
+[![NeurIPS 2025](https://img.shields.io/badge/NeurIPS-2025-4b6cb7.svg)](https://neurips.cc/virtual/2025/loc/san-diego/poster/119100)
+[![OpenReview](https://img.shields.io/badge/OpenReview-En1F2gjza6-087443.svg)](https://openreview.net/forum?id=En1F2gjza6)
 [![Python](https://img.shields.io/badge/Python-3.7%2B-3776ab.svg)](https://www.python.org/)
 
-Official code for **"Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy"**.
+Official code for **"P-Law: Predicting Quantitative Scaling Law with Entropy Guidance in Large Recommendation Models"**.
 
-This repository studies why the scaling-law view used for large language models does not directly transfer to sequential recommendation, and introduces a **Performance Law** that models HR/NDCG behavior using both model configuration and data quality. The codebase contains the entropy utility, the general transformer training code, and the appendix scripts/frameworks used to fit and visualize the reported laws.
+This repository studies why loss-oriented scaling laws do not directly transfer to large recommendation models, and introduces **P-Law** to predict ranking performance under varied model, data, and training settings. The codebase contains the entropy utility, transformer-based recommendation training code, and appendix scripts/frameworks used to fit and visualize the reported performance laws.
 
 ## 1. Paper
 
-Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. **Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy.** In *Proceedings of the 41st International Conference on Machine Learning (ICML 2024)*, PMLR 235, 2024.
+Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. **P-Law: Predicting Quantitative Scaling Law with Entropy Guidance in Large Recommendation Models.** NeurIPS 2025 Poster, San Diego, USA, 2025.
 
-[Paper](https://arxiv.org/abs/2412.00430) / [PDF](https://arxiv.org/pdf/2412.00430) / [Project Page](https://ustc-starteam.github.io/P-Law/) / [Citation](#citation)
+[OpenReview](https://openreview.net/forum?id=En1F2gjza6) / [NeurIPS Virtual Poster](https://neurips.cc/virtual/2025/loc/san-diego/poster/119100) / [Slides PDF](https://neurips.cc/media/neurips-2025/Slides/119100.pdf) / [Video](https://slideslive.com/39047036) / [Poster Image](https://neurips.cc/media/PosterPDFs/NeurIPS%202025/119100.png?t=1762758210.729176) / [Project Page](https://ustc-starteam.github.io/P-Law/) / [Citation](#citation)
 
-P-Law studies how sequential recommendation performance changes with model scale and data quality. Instead of directly applying loss-oriented scaling laws from large language models, it fits HR/NDCG with a recommendation-specific Performance Law and uses Approximate Entropy to quantify sequence complexity.
+P-Law predicts large recommendation model performance instead of only describing qualitative scaling trends. It introduces an entropy-guided data-quality signal to reduce the effect of redundant user sequences, models the gap between loss and ranking performance, and supports practical uses such as optimal-parameter prediction and model-expansion potential analysis.
+
+NeurIPS 2025 materials:
+
+- Session: Wednesday, December 3, 2025, 11:00 AM - 2:00 PM PST.
+- Presentation video: [SlidesLive 39047036](https://slideslive.com/39047036).
+- Slides/PPT material: [official NeurIPS slides PDF](https://neurips.cc/media/neurips-2025/Slides/119100.pdf).
+- Poster asset: [official NeurIPS poster image](https://neurips.cc/media/PosterPDFs/NeurIPS%202025/119100.png?t=1762758210.729176).
 
 ## 2. Highlights
 
-- Introduces **Performance Law** for sequential recommendation, modeling performance rather than only loss.
-- Uses **Approximate Entropy (ApEn)** as a data-quality signal that better reflects sequence complexity than dataset size alone.
-- Shows that recommendation performance can follow a U-shaped trend over model configuration and data quality, unlike a simple monotonic scaling-law curve.
-- Provides reusable components for entropy estimation, transformer-based sequential recommendation experiments, and appendix fitting/visualization.
+- Predicts quantitative performance for large recommendation models across model scale, data settings, and training choices.
+- Uses entropy guidance to measure data quality and reduce the influence of redundant, low-information user sequences.
+- Models the loss-performance discrepancy so scaling analysis better reflects ranking metrics such as HR and NDCG.
+- Provides reusable components for entropy estimation, transformer-based recommendation experiments, and appendix fitting/visualization.
 
 ## 3. Method At A Glance
 
 ![Performance Law overview](docs/assets/performance-law-overview.png)
 
-The paper contrasts conventional scaling-law behavior with the recommendation-specific Performance Law. Instead of expecting larger models or more data to monotonically improve performance, the fitted surfaces expose where HR/NDCG improve, saturate, or decay under different sequence lengths, model depths, embedding dimensions, and ApEn-derived data-quality parameters.
+The paper contrasts conventional scaling-law behavior with the recommendation-specific P-Law. Instead of expecting larger models or more data to monotonically improve performance, the fitted surfaces expose where HR/NDCG improve, saturate, or decay under different sequence lengths, model depths, embedding dimensions, and entropy-guided data-quality parameters.
 
 ## 4. Repository Structure
 
 ```text
 .
-|-- PerformanceLaw/                         # Python package for actual entropy / ApEn-style sequence complexity
+|-- PerformanceLaw/                         # Python package for actual entropy / sequence-complexity estimation
 |-- General_Transformer/                    # Transformer training and evaluation code for sequential recommendation
 |-- Performance_Law_Appendix_Result/        # Performance-law fitting scripts and generated appendix result figures
 |-- Performance_Law_Appendix_Framework/     # Additional baseline/framework code used in appendix experiments
@@ -120,7 +128,7 @@ Adjust dataset paths in the training script before launching large experiments.
 
 ![Performance Law fitting results](docs/assets/performance-law-results.png)
 
-The fitted Performance Law surfaces track HR and NDCG behavior across model and data settings, while the simpler scaling-law surfaces miss important non-monotonic trends. This supports the paper's conclusion that recommendation model selection should account for both model scale and data-quality signals such as ApEn.
+The fitted P-Law surfaces track HR and NDCG behavior across model and data settings, while simpler scaling-law surfaces miss important non-monotonic trends. This supports the paper's conclusion that recommendation model selection should account for model scale, data quality, and the gap between optimization loss and ranking performance.
 
 ## 11. Notes For Maintainers
 
@@ -133,13 +141,12 @@ The fitted Performance Law surfaces track HR and NDCG behavior across model and 
 ## 12. Citation
 
 ```bibtex
-@inproceedings{shen2024optimizing,
-  title = {Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy},
+@inproceedings{shen2025plaw,
+  title = {P-Law: Predicting Quantitative Scaling Law with Entropy Guidance in Large Recommendation Models},
   author = {Shen, Tingjia and Wang, Hao and Wu, Chuhan and Chin, Jin Yao and Guo, Wei and Liu, Yong and Guo, Huifeng and Lian, Defu and Tang, Ruiming and Chen, Enhong},
-  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
-  series = {Proceedings of Machine Learning Research},
-  volume = {235},
-  year = {2024}
+  booktitle = {Advances in Neural Information Processing Systems},
+  year = {2025},
+  url = {https://openreview.net/forum?id=En1F2gjza6}
 }
 ```
 
