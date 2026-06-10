@@ -1,6 +1,6 @@
 # Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy
 
-[![arXiv](https://img.shields.io/badge/arXiv-2412.00430-b31b1b.svg)](https://arxiv.org/abs/2412.00430)
+[![Project Page](https://img.shields.io/badge/Project-Page-2454d6.svg)](https://ustc-starteam.github.io/P-Law/)
 [![ICML 2024](https://img.shields.io/badge/ICML-2024-4b6cb7.svg)](https://icml.cc/virtual/2024)
 [![Python](https://img.shields.io/badge/Python-3.7%2B-3776ab.svg)](https://www.python.org/)
 
