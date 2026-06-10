@@ -10,7 +10,11 @@ This repository studies why the scaling-law view used for large language models 
 
 ## 1. Paper
 
-Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. **Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy.** Proceedings of the 41st International Conference on Machine Learning (ICML), PMLR 235, 2024. [arXiv:2412.00430](https://arxiv.org/abs/2412.00430).
+Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. **Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy.** In *Proceedings of the 41st International Conference on Machine Learning (ICML 2024)*, PMLR 235, 2024.
+
+[Paper](https://arxiv.org/abs/2412.00430) / [PDF](https://arxiv.org/pdf/2412.00430) / [Project Page](https://ustc-starteam.github.io/P-Law/) / [Citation](#citation)
+
+P-Law studies how sequential recommendation performance changes with model scale and data quality. Instead of directly applying loss-oriented scaling laws from large language models, it fits HR/NDCG with a recommendation-specific Performance Law and uses Approximate Entropy to quantify sequence complexity.
 
 ## 2. Highlights
 

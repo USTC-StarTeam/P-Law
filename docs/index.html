@@ -109,9 +109,22 @@
     .paper-ref {
       color: #324057;
       font-size: 14px;
-      margin: 0 0 18px;
+      margin: 0 0 12px;
       padding-left: 14px;
       border-left: 3px solid var(--blue);
+      max-width: 790px;
+    }
+
+    .paper-links {
+      margin: 0 0 14px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .paper-summary {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15px;
       max-width: 790px;
     }
 
@@ -296,7 +309,9 @@
           <div class="eyebrow">ICML 2024</div>
           <h1>Performance Laws for Sequential Recommendation</h1>
           <p class="subtitle">A performance-centered scaling analysis with approximate entropy for modeling how recommendation quality changes with data quality and model configuration.</p>
-          <p class="paper-ref">Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. <strong>Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy.</strong> In <em>Proceedings of the 41st International Conference on Machine Learning (ICML 2024)</em>, PMLR 235, 2024. Paper: <a href="https://arxiv.org/abs/2412.00430">arXiv:2412.00430</a>.</p>
+          <p class="paper-ref">Tingjia Shen, Hao Wang, Chuhan Wu, Jin Yao Chin, Wei Guo, Yong Liu, Huifeng Guo, Defu Lian, Ruiming Tang, and Enhong Chen. <strong>Optimizing Sequential Recommendation Models with Scaling Laws and Approximate Entropy.</strong> In <em>Proceedings of the 41st International Conference on Machine Learning (ICML 2024)</em>, PMLR 235, 2024.</p>
+          <p class="paper-links"><a href="https://arxiv.org/abs/2412.00430">Paper</a> / <a href="https://arxiv.org/pdf/2412.00430">PDF</a> / <a href="https://ustc-starteam.github.io/P-Law/">Project Page</a> / <a href="#citation">Citation</a></p>
+          <p class="paper-summary">P-Law studies how sequential recommendation performance changes with model scale and data quality. It fits HR/NDCG with a recommendation-specific Performance Law and uses Approximate Entropy to quantify sequence complexity.</p>
           <div class="buttons">
             <a class="button primary" href="https://github.com/USTC-StarTeam/P-Law">Code</a>
             <a class="button" href="#method">Method</a>
